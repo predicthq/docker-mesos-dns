@@ -1,0 +1,22 @@
+{
+  "zk": "{{ MESOS_DNS_ZK }}",
+  {%if MESOS_DNS_MASTER is defined %}"master": {% set masters = MESOS_DNS_MASTER.replace(' ', '').split(',') %}{{ masters|replace("'", '"') }},{% endif %}
+  "refreshSeconds": {{ MESOS_DNS_REFRESH_SECONDS|default(5) }},
+  "ttl": {{ MESOS_DNS_TTL|default(10) }},
+  "domain": "{{ MESOS_DNS_DOMAIN|default("mesos") }}",
+  "port": {{ MESOS_DNS_PORT|default(53) }},
+  "resolvers": {%if MESOS_DNS_RESOLVERS is defined %}{% set dns_resolvers = MESOS_DNS_RESOLVERS.replace(' ', '').split(',') %}{% else %}{% set dns_resolvers = ['8.8.8.8', '8.8.4.4'] %}{% endif %}{{ dns_resolvers|replace("'", '"') }},
+  "timeout": {{ MESOS_DNS_TIMEOUT|default(5) }},
+  "httpon": {{ MESOS_DNS_HTTP_ON|default("true") }},
+  "dnson": {{ MESOS_DNS_DNS_ON|default("true") }},
+  "httpport": {{ MESOS_HTTP_PORT|default(8123) }},
+  "externalon": {{ MESOS_DNS_EXTERNAL_ON|default("true") }},
+  "listener": "{{ MESOS_DNS_LISTENER|default('0.0.0.0') }}",
+  "SOAMname": "{{ MESOS_DNS_SOAM_NAME|default("ns1.mesos") }}",
+  "SOARname": "{{ MESOS_DNS_SOAR_NAME|default("root.ns1.mesos") }}",
+  "SOARefresh": {{ MESOS_DNS_SOAR_REFRESH|default(60) }},
+  "SOARetry":   {{ MESOS_DNS_SOAR_RETRY|default(600) }},
+  "SOAExpire":  {{ MESOS_DNS_SOA_EXPIRE|default(86400) }},
+  "SOAMinttl": {{ MESOS_DNS_SOA_MIN_TTL|default(60) }},
+  "IPSources": {%if MESOS_DNS_IP_SOURCES is defined %}{% set ip_sources = MESOS_DNS_IP_SOURCES.replace(' ', '').split(',') %}{% else %}{% set ip_sources = ['netinfo', 'mesos', 'host'] %}{% endif %}{{ ip_sources|replace("'", '"') }}
+}
